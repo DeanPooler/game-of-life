@@ -6,11 +6,11 @@ import GameBoard from './components/GameBoard'
 import gridService from './services/gridService'
 
 const App = () => {
-  const startWidth = 10;
-  const startHeight = 10;
+  const startWidth = 100;
+  const startHeight = 100;
   const [isGameLoopActive, setIsGameLoopActive] = useState(false);
   const [tickCount, setTickCount] = useState(0);
-  const [cells, setCells] = useState(Array.from({length: startWidth},()=> Array.from({length: startHeight}, () => false)));
+  const [cells, setCells] = useState(gridService.createEmptyCellGrid(startHeight, startWidth));
 
   const resetCellGrid = () => {
     const emptyCellGrid = gridService.createEmptyCellGrid(startHeight, startWidth);
@@ -33,53 +33,8 @@ const App = () => {
   }
 
   const doGameTick = () => {
-    let copy = _.cloneDeep(cells);
-    
-    cells.forEach((row, x) => {
-      row.forEach((_cell, y) => {
-        const count = getAdjacentLiveCount(x, y);
-        
-        if (cells[x][y] && count < 2) {
-          copy[x][y] = false;
-        }
-    
-        if (cells[x][y] && count > 3) {
-          copy[x][y] = false;
-        }
-        
-        if (!cells[x][y] && count == 3) {
-          copy[x][y] = true;
-        }
-      });
-    });
-    setCells(copy);
+    setCells(gridService.getNextGridState(cells));
   }
-
-  const getAdjacentLiveCount = (x, y) => {
-    let count = 0;
-    const operations = [
-      [0, 1],
-      [0, -1],
-      [1, -1],
-      [-1, 1],
-      [1, 1],
-      [-1, -1],
-      [1, 0],
-      [-1, 0],
-    ];
-
-    operations.forEach(([i, j]) => {
-      const newX = x + i;
-      const newY = y + j;
-      if (newX >= 0 && newX < startWidth && newY >= 0 && newY < startHeight) {
-        if (cells[newX][newY]) {
-          count++;
-        }
-      }
-    })
-    return count;
-  }
-
 
   const setStartingPosition = () => {
     handleCellChange(0, 1, true);
