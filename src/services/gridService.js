@@ -21,11 +21,12 @@ const createRandomCellGrid = (height, width) => {
 }
 
 const getNextGridState = (currentGrid) => {
-  const size = currentGrid.length
+  const height = currentGrid.length;
+  const width = currentGrid[0].length;
   const newGrid = currentGrid.map((row) => [...row])
 
-  for (let i = 0; i < size; i++) {
-    for (let j = 0; j < size; j++) {
+  for (let i = 0; i < height; i++) {
+    for (let j = 0; j < width; j++) {
       let neighbours = 0;
 
       for (let di = -1; di <= 1; di++) {
@@ -34,7 +35,7 @@ const getNextGridState = (currentGrid) => {
           const ni = i + di
           const nj = j + dj
 
-          if (ni >= 0 && ni < size && nj >= 0 && nj < size) {
+          if (ni >= 0 && ni < height && nj >= 0 && nj < width) {
             neighbours += currentGrid[ni][nj] ? 1 : 0;
           }
         }
