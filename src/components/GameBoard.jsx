@@ -1,6 +1,6 @@
 import Cell from "./Cell"
 
-const GameBoard = ({ cells }) => {
+const GameBoard = ({ cells, changeCell }) => {
 
   return (
     <div className="game-board">
@@ -12,6 +12,7 @@ const GameBoard = ({ cells }) => {
               x={x}
               y={y}
               populated={cell}
+              changeCell={changeCell}
             />
           )}
         </div>

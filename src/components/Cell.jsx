@@ -1,4 +1,4 @@
-const Cell = ({ x, y, populated }) => {
+const Cell = ({ x, y, populated, changeCell }) => {
   const bg = populated ? "white" : "black"
   const textColor = populated ? "black" : "white"
 
@@ -10,7 +10,8 @@ const Cell = ({ x, y, populated }) => {
   }
 
   return (
-    <div className="cell" style={style}>
+    <div className="cell" style={style}
+      onClick={ () => changeCell(x, y, !populated) }>
       {x},{y}
     </div>
   )

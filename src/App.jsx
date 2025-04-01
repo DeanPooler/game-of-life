@@ -94,7 +94,10 @@ const App = () => {
         resetHandler={resetCellGrid}
         tickHandler={doGameTick}
       />
-      <GameBoard cells={cells} />
+      <GameBoard 
+        cells={cells}
+        changeCell={handleCellChange}
+      />
     </>
   )
 }
