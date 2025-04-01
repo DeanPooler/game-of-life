@@ -8,6 +8,8 @@ import gridService from './services/gridService'
 const App = () => {
   const startWidth = 10;
   const startHeight = 10;
+  const [isGameLoopActive, setIsGameLoopActive] = useState(false);
+  const [tickCount, setTickCount] = useState(0);
   const [cells, setCells] = useState(Array.from({length: startWidth},()=> Array.from({length: startHeight}, () => false)));
 
   const resetCellGrid = () => {
@@ -24,6 +26,10 @@ const App = () => {
     let copy = [...cells];
     copy[x][y] = value;
     setCells(copy);
+  }
+
+  const toggleGameLoop = () => {
+    setIsGameLoopActive(!isGameLoopActive)
   }
 
   const doGameTick = () => {
@@ -86,6 +92,14 @@ const App = () => {
   useEffect(() => {
     setStartingPosition();
   }, [])
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      isGameLoopActive && doGameTick()
+      isGameLoopActive && setTickCount(tickCount + 1)
+    }, 500)
+    return () => clearTimeout(timer)
+  }, [isGameLoopActive, tickCount])
   
   return (
     <>
@@ -93,6 +107,7 @@ const App = () => {
         randomizeHandler={randomizeCellGrid}
         resetHandler={resetCellGrid}
         tickHandler={doGameTick}
+        toggleGameLoop={toggleGameLoop}
       />
       <GameBoard 
         cells={cells}
