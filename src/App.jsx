@@ -66,17 +66,17 @@ const App = () => {
       [-1, -1],
       [1, 0],
       [-1, 0],
-  ];
+    ];
 
-  operations.forEach(([i, j]) => {
-    const newX = x + i;
-    const newY = y + j;
-    if (newX >= 0 && newX < startWidth && newY >= 0 && newY < startHeight) {
-      if (cells[newX][newY]) {
-        count++;
+    operations.forEach(([i, j]) => {
+      const newX = x + i;
+      const newY = y + j;
+      if (newX >= 0 && newX < startWidth && newY >= 0 && newY < startHeight) {
+        if (cells[newX][newY]) {
+          count++;
+        }
       }
-    }
-  })
+    })
     return count;
   }
 
